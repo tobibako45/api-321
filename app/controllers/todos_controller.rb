@@ -1,5 +1,5 @@
 class TodosController < ApplicationController
-  before_action :authenticate
+  before_action :authenticated_user
 
   # curl -X GET --url http://localhost:3000/todos --header 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.IiM8VXNlcjoweDAwMDA3ZmRlY2QyZTlmNjA-Ig.X8wPJjfHbtmAL2Rzhb6oxJJZv3eKunfOTlkUYCD25_c' --header 'Content-Type: application/json'
 
@@ -16,11 +16,14 @@ class TodosController < ApplicationController
 # 自分のタスク一覧API
 #   curl -X GET --url http://localhost:3000/todos --header 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IlVzZXIxQHRlc3QuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.ktm6lvVnqQGhFNdNCWWFeTbKHvRCFy_UlfhIal-E06U' --header 'Content-Type: application/json'
 
+  #   curl -X GET --url http://localhost:3000/todos --header 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IlVzZXIyQHRlc3QuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.Sr91OwGTeyQfRPYE1jXrvK6Luon0XZc8KjzxcYA35fQ' --header 'Content-Type: application/json'
+
+
 
 
   def index
-    # @todos = @current_user.todos.all
-    # render json: @current_user
+    @todos = @authenticated_user.todos.all
+    render json: @todos
   end
 
   def show
@@ -36,8 +39,6 @@ class TodosController < ApplicationController
       render json: {status: 400, message: @todo.errors.full_messages}
     end
   end
-
-
 
   private
 
