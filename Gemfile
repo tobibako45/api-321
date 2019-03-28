@@ -30,6 +30,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 
 gem 'rails-i18n'
+gem 'jwt'
 
 
 group :development, :test do
