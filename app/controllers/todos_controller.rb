@@ -19,6 +19,11 @@ class TodosController < ApplicationController
   #   curl -X GET --url http://localhost:3000/todos --header 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IlVzZXIyQHRlc3QuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.Sr91OwGTeyQfRPYE1jXrvK6Luon0XZc8KjzxcYA35fQ' --header 'Content-Type: application/json'
 
 
+# 詳細
+  # curl -X GET --url http://localhost:3000/todos/2 --header 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IlVzZXIxQHRlc3QuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.ktm6lvVnqQGhFNdNCWWFeTbKHvRCFy_UlfhIal-E06U' --header 'Content-Type: application/json'
+
+
+  # curl -X GET --url http://localhost:3000/todos/11 --header 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IlVzZXIyQHRlc3QuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.Sr91OwGTeyQfRPYE1jXrvK6Luon0XZc8KjzxcYA35fQ' --header 'Content-Type: application/json' | jq
 
 
   def index
@@ -27,8 +32,12 @@ class TodosController < ApplicationController
   end
 
   def show
-    @todo = Todo.find(params[:id])
-    render json: @todo
+    if @authenticated_user.todos.exists?(id: params[:id])
+      @todo = @authenticated_user.todos.find(params[:id])
+      render json: @todo
+    else
+      render json: {"status": 403, "message": "権限がありません"}
+    end
   end
 
   def create

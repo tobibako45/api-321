@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
     if request.headers["Authorization"].present?
       token = request.headers['Authorization'].split(' ').last
       # decode
-      JWT.decode(token, Rails.application.credentials.secret_key_base, true, { algorithm: "HS256" })[0]
+      JWT.decode(token, Rails.application.credentials.secret_key_base)[0]
     else
       render json: {status: 401, message: "ログインしてください"}
     end
