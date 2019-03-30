@@ -1,4 +1,5 @@
 class TodosController < ApplicationController
+
   before_action :authenticated_user
   before_action :user_todos, only: [:show, :update, :destroy]
 
@@ -23,7 +24,7 @@ class TodosController < ApplicationController
 
   def update
     @todo = Todo.find(params[:id])
-    if @todo.update(todo_params)
+    if @todo.update(title: todo_params[:title], description: todo_params[:description], status: status_params[:status], user_id: todo_params[:user_id])
       render json: {"status": 200, "message": "タスクを更新しました"}
     else
       render json: {status: 400, message: @todo.errors.full_messages}
@@ -47,11 +48,14 @@ class TodosController < ApplicationController
     raw_parameters = {
         title: params[:title],
         description: params[:description],
-        status: params[:status],
         user_id: @authenticated_user.id
     }
     parameters = ActionController::Parameters.new(raw_parameters)
-    parameters.permit(:title, :description, :status, :user_id)
+    parameters.permit(:title, :description, :user_id)
+  end
+
+  def status_params
+    params.require(:todo).permit(:status)
   end
 
 end
