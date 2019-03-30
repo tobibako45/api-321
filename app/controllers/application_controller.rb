@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::API
 
-
   private
 
   def authenticate

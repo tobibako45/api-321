@@ -1,24 +1,50 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Web APIを作ろう！(codebaseイベント 2019.3.21 )
 
-Things you may want to cover:
+一覧
+```
+curl -X GET http://localhost:3000/users -H 'Content-Type: application/json'
+```
 
-* Ruby version
+登録
+```
+curl -X POST http://localhost:3000/users -H 'Content-Type: application/json' -d '{"name": "user1","description": "user1のdescription", "email": "user1@example.com","password": "password"}'
+```
 
-* System dependencies
+詳細
+```
+curl -X GET http://localhost:3000/users/1 -H 'Content-Type: application/json'
+```
 
-* Configuration
+ログイン
+```
+curl -X POST http://localhost:3000/users/login -H 'Content-Type: application/json' -d '{"email": "user1@example.com","password": "password"}'
+```
 
-* Database creation
+自分のタスクの作成  
+```
+curl -F title=たすく -F description=テスト説明 -F status=0 http://localhost:3000/todos -H 'Authorization: Token eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.a0U7auslNuYr8qsE_zCrhEThc1ksLbfOMz5DiM9qcsg'
+```
 
-* Database initialization
+自分のタスク一覧
+  
+```
+curl -X GET http://localhost:3000/todos -H 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.a0U7auslNuYr8qsE_zCrhEThc1ksLbfOMz5DiM9qcsg' -H 'Content-Type: application/json'
+```
 
-* How to run the test suite
+自分のタスク詳細
+```
+curl -X GET http://localhost:3000/todos/1 -H 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.a0U7auslNuYr8qsE_zCrhEThc1ksLbfOMz5DiM9qcsg' -H 'Content-Type: application/json'
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+自分のタスクの更新  
+```
+curl -X PATCH http://localhost:3000/todos/1 -H 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.a0U7auslNuYr8qsE_zCrhEThc1ksLbfOMz5DiM9qcsg' -H 'Content-Type: application/json'  -d '{"title": "タイトル変えたよ","description": "description変えたよ", "status": 1}'
+```
 
-* Deployment instructions
+自分のタスクの削除 
+```
+curl -X DELETE http://localhost:3000/todos/1 -H 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.a0U7auslNuYr8qsE_zCrhEThc1ksLbfOMz5DiM9qcsg' -H 'Content-Type: application/json'
+```
 
-* ...
