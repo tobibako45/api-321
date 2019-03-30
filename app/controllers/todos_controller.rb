@@ -1,6 +1,6 @@
 class TodosController < ApplicationController
   before_action :authenticated_user
-  before_action :user_todos, only: [:show, :update]
+  before_action :user_todos, only: [:show, :update, :destroy]
 
   # 自分のタスク一覧API
   #   curl -X GET --url http://localhost:3000/todos --header 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IlVzZXIxQHRlc3QuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.ktm6lvVnqQGhFNdNCWWFeTbKHvRCFy_UlfhIal-E06U' --header 'Content-Type: application/json'
@@ -50,6 +50,10 @@ class TodosController < ApplicationController
     end
   end
 
+  def destroy
+    Todo.find(params[:id]).destroy
+    render json: {"status": 200, "message": "タスクを削除しました"}
+  end
 
   private
 
