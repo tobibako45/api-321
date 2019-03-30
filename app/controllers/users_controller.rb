@@ -6,14 +6,13 @@ class UsersController < ApplicationController
   # curl -X POST --url http://localhost:3000/users --header 'Content-Type: application/json' -d '{"name": "test6", "email": "test7@test.com","password": "password"}'
 
   # ログイン
-  # curl --request POST --url http://localhost:3000/users/login --header 'Content-Type: application/json' --data '{"email":"User1@test.com","password": "password"}'
+  # curl --request POST --url http://localhost:3000/users/login --header 'Content-Type: application/json' -d '{"email":"User1@test.com","password": "password"}'
 
-# 一覧
+  # 一覧
   # curl --request GET --url http://localhost:3000/users --header 'Content-Type: application/json'
 
   # 詳細
   # curl -X GET --url http://localhost:3000/users/1 --header 'Content-Type: application/json'
-
 
   # curl -X GET --url http://localhost:3000/todos --header 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IlVzZXIxQHRlc3QuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.ktm6lvVnqQGhFNdNCWWFeTbKHvRCFy_UlfhIal-E06U' --header 'Content-Type: application/json'
 
