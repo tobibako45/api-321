@@ -13,18 +13,19 @@ class TodosController < ApplicationController
   # curl -X POST --url http://localhost:3000/todos --header 'Content-Type: application/json'  --header 'eyJhbGciOiJIUzI1NiJ9.IiM8VXNlcjoweDAwMDA3ZjhlZDUxMTM4NTA-Ig.382xwvXcdcOugKVT4RQ9jh72H6XKhE9hEQFia0KIEV8' -d '{"title": "title", "description": "test1description}'
   #
 
-# 自分のタスク一覧API
-#   curl -X GET --url http://localhost:3000/todos --header 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IlVzZXIxQHRlc3QuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.ktm6lvVnqQGhFNdNCWWFeTbKHvRCFy_UlfhIal-E06U' --header 'Content-Type: application/json'
+  # 自分のタスク一覧API
+  #   curl -X GET --url http://localhost:3000/todos --header 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IlVzZXIxQHRlc3QuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.ktm6lvVnqQGhFNdNCWWFeTbKHvRCFy_UlfhIal-E06U' --header 'Content-Type: application/json'
 
   #   curl -X GET --url http://localhost:3000/todos --header 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IlVzZXIyQHRlc3QuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.Sr91OwGTeyQfRPYE1jXrvK6Luon0XZc8KjzxcYA35fQ' --header 'Content-Type: application/json'
 
 
-# 詳細
+  # 詳細
   # curl -X GET --url http://localhost:3000/todos/2 --header 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IlVzZXIxQHRlc3QuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.ktm6lvVnqQGhFNdNCWWFeTbKHvRCFy_UlfhIal-E06U' --header 'Content-Type: application/json'
-
 
   # curl -X GET --url http://localhost:3000/todos/11 --header 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IlVzZXIyQHRlc3QuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.Sr91OwGTeyQfRPYE1jXrvK6Luon0XZc8KjzxcYA35fQ' --header 'Content-Type: application/json' | jq
 
+  # create
+  #   curl -F title=たすく -F description=テスト説明 http://localhost:3000/todos -H 'Authorization: Token eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IlVzZXIxQHRlc3QuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.ktm6lvVnqQGhFNdNCWWFeTbKHvRCFy_UlfhIal-E06U'
 
   def index
     @todos = @authenticated_user.todos.all
@@ -52,7 +53,9 @@ class TodosController < ApplicationController
   private
 
   def todo_params
-    params.fetch(:todo, {}).permit(:title, :description, :status, :user_id)
+    raw_parameters = {title: params[:title], description: params[:description], user_id: @authenticated_user.id}
+    parameters = ActionController::Parameters.new(raw_parameters)
+    parameters.permit(:title, :description, :user_id)
   end
 
 end
