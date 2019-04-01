@@ -4,12 +4,12 @@ class TodosController < ApplicationController
   before_action :user_todos, only: [:show, :update, :destroy]
 
   def index
-    @todos = @authenticated_user.todos.all
+    @todos = authenticated_user.todos.all
     render json: @todos
   end
 
   def show
-    @todo = @authenticated_user.todos.find(params[:id])
+    @todo = authenticated_user.todos.find(params[:id])
     render json: @todo
   end
 
@@ -39,7 +39,7 @@ class TodosController < ApplicationController
   private
 
   def user_todos
-    unless @authenticated_user.todos.exists?(id: params[:id])
+    unless authenticated_user.todos.exists?(id: params[:id])
       render json: {"status": 403, "message": "権限がありません"}
     end
   end
@@ -48,7 +48,7 @@ class TodosController < ApplicationController
     raw_parameters = {
         title: params[:title],
         description: params[:description],
-        user_id: @authenticated_user.id
+        user_id: authenticated_user.id
     }
     parameters = ActionController::Parameters.new(raw_parameters)
     parameters.permit(:title, :description, :user_id)
