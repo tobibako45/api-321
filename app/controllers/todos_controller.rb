@@ -4,30 +4,30 @@ class TodosController < ApplicationController
   before_action :user_todos, only: [:show, :update, :destroy]
 
   def index
-    @todos = authenticated_user.todos.all
-    render json: @todos
+    todos = authenticated_user.todos.all
+    render json: todos
   end
 
   def show
-    @todo = authenticated_user.todos.find(params[:id])
-    render json: @todo
+    todo = authenticated_user.todos.find(params[:id])
+    render json: todo
   end
 
   def create
-    @todo = Todo.new(todo_params)
-    if @todo.save
+    todo = Todo.new(todo_params)
+    if todo.save
       render json: {status: 200, message: 'タスクを作成しました'}
     else
-      render json: {status: 400, message: @todo.errors.full_messages}
+      render json: {status: 400, message: todo.errors.full_messages}
     end
   end
 
   def update
-    @todo = Todo.find(params[:id])
-    if @todo.update(title: todo_params[:title], description: todo_params[:description], status: status_params[:status], user_id: todo_params[:user_id])
+    todo = Todo.find(params[:id])
+    if todo.update(title: todo_params[:title], description: todo_params[:description], status: status_params[:status], user_id: todo_params[:user_id])
       render json: {"status": 200, "message": "タスクを更新しました"}
     else
-      render json: {status: 400, message: @todo.errors.full_messages}
+      render json: {status: 400, message: todo.errors.full_messages}
     end
   end
 

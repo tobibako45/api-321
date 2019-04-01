@@ -1,21 +1,21 @@
 class UsersController < ApplicationController
 
   def index
-    @users = User.pluck(:name)
-    render json: @users
+    users = User.pluck(:name)
+    render json: users
   end
 
   def show
-    @user = User.where(id: params[:id]).pluck(:name, :description)
-    render json: @user
+    user = User.where(id: params[:id]).pluck(:name, :description)
+    render json: user
   end
 
   def create
-    @user = User.new(user_params)
-    if @user.save
+    user = User.new(user_params)
+    if user.save
       render json: {status: 200, message: 'ユーザー登録が完了しました'}
     else
-      render json: {status: 400, message: @user.errors.full_messages}
+      render json: {status: 400, message: user.errors.full_messages}
     end
   end
 
