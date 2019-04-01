@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.where(id: params[:id]).pluck(:name, :description)
     render json: @user
   end
 
