@@ -14,7 +14,7 @@ class ApplicationController < ActionController::API
   end
 
   def authenticated_user
-    @authenticated_user = User.find_by(email: authenticate["email"])
+    User.find_by(email: authenticate["email"])
   end
 
 end
