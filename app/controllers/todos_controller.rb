@@ -1,5 +1,4 @@
 class TodosController < ApplicationController
-
   before_action :authenticated_user
   before_action :user_todos, only: [:show, :update, :destroy]
 

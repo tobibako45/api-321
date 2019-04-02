@@ -1,12 +1,13 @@
 class UsersController < ApplicationController
 
   def index
-    users = User.select(:id, :name)
-    render json: users
-
     # users = User.pluck(:name)
     # username_list = users.map {|user| {name: user}}
     # render json: username_list
+
+    # users = User.select(:name)
+    users = User.select(:id, :name)
+    render json: users
   end
 
   def show
@@ -42,5 +43,3 @@ class UsersController < ApplicationController
   end
 
 end
-
-
