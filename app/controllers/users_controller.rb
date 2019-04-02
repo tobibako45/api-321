@@ -2,7 +2,9 @@ class UsersController < ApplicationController
 
   def index
     users = User.pluck(:name)
-    render json: users
+    username_list = []
+    users.each {|user| username_list << {name: user}}
+    render json: username_list
   end
 
   def show
