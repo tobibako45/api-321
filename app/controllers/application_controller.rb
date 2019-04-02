@@ -8,7 +8,11 @@ class ApplicationController < ActionController::API
       begin
         # decode
         JWT.decode(token, Rails.application.credentials.secret_key_base)[0]
+      rescue JWT::ExpiredSignature => e
+        p e
+        render json: {status: 401, message: "有効期限が切れました"}
       rescue JWT::VerificationError, JWT::DecodeError => e
+        p e
         render json: {status: 400, message: "認証に失敗しました"}
       end
     else

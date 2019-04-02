@@ -29,6 +29,9 @@ class UsersController < ApplicationController
     user = User.find_by(email: params[:email], password: params[:password])
     if user
       user_data = {email: user.email, password: user.password}
+      # １分後を期限
+      exp = Time.now.since(1.minute).to_i
+      user_data[:exp] = exp
       # encode
       render json: {access_token: JWT.encode(user_data, Rails.application.credentials.secret_key_base, "HS256")}
     else
