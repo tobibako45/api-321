@@ -1,18 +1,16 @@
 class UsersController < ApplicationController
 
   def index
-    # users = User.pluck(:name)
-    # username_list = users.map {|user| {name: user}}
-    # render json: username_list
-
-    # users = User.select(:name)
-    users = User.select(:id, :name)
+    users = User.all.inject([]) {|arr, val|
+      arr.push("name": val.name)
+    }
     render json: users
   end
 
   def show
-    # user = User.where(id: params[:id]).pluck(:name, :description)
-    user = User.where(id: params[:id]).select(:id, :name, :description)
+    p user = User.where(id: params[:id]).inject([]) {|arr, val|
+      arr.push("name": val.name, "description": val.description)
+    }
     render json: user
   end
 
@@ -30,7 +28,7 @@ class UsersController < ApplicationController
     if user
       user_data = {email: user.email, password: user.password}
       # １分後を期限
-      exp = Time.now.since(1.minute).to_i
+      exp = Time.now.since(100.minute).to_i
       user_data[:exp] = exp
       # encode
       render json: {access_token: JWT.encode(user_data, Rails.application.credentials.secret_key_base, "HS256")}

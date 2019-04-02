@@ -3,13 +3,16 @@ class TodosController < ApplicationController
   before_action :user_todos, only: [:show, :update, :destroy]
 
   def index
-    # todos = authenticated_user.todos.all
-    todos = authenticated_user.todos.select(:id, :title, :status)
+    todos = authenticated_user.todos.inject([]) {|arr, val|
+      arr.push("title": val.title, "status": val.status)
+    }
     render json: todos
   end
 
   def show
-    todo = authenticated_user.todos.where(id: params[:id]).select(:id, :title, :description, :status)
+    todo = authenticated_user.todos.where(id: params[:id]).inject([]) {|arr, val|
+      arr.push("title": val.title, "description": val.description, "status": val.status)
+    }
     render json: todo
   end
 
