@@ -4,7 +4,8 @@ class TodosController < ApplicationController
   before_action :user_todos, only: [:show, :update, :destroy]
 
   def index
-    todos = authenticated_user.todos.all
+    # todos = authenticated_user.todos.all
+    todos = authenticated_user.todos.select(:id, :title, :status)
     render json: todos
   end
 

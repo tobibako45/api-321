@@ -1,14 +1,17 @@
 class UsersController < ApplicationController
 
   def index
+    # users = User.select(:name)
+    # render json: users
+
     users = User.pluck(:name)
-    username_list = []
-    users.each {|user| username_list << {name: user}}
+    username_list = users.map {|user| {name: user}}
     render json: username_list
   end
 
   def show
-    user = User.where(id: params[:id]).pluck(:name, :description)
+    # user = User.where(id: params[:id]).pluck(:name, :description)
+    user = User.where(id: params[:id]).select(:name, :description)
     render json: user
   end
 
