@@ -17,10 +17,12 @@ curl -X POST http://localhost:3000/users -H 'Content-Type: application/json' -d 
 curl -X GET http://localhost:3000/users/1 -H 'Content-Type: application/json'
 ```
 
-ログイン
+ログイン [検証のため、有効期限を１分に設定してる]
 ```
 curl -X POST http://localhost:3000/users/login -H 'Content-Type: application/json' -d '{"email": "user1@example.com","password": "password"}'
 ```
+
+
 
 自分のタスクの作成  
 ```
