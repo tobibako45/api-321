@@ -19,31 +19,31 @@ class TodosController < ApplicationController
   def create
     todo = Todo.new(todo_params)
     if todo.save
-      render json: {status: 200, message: 'タスクを作成しました'}
+      render json: {status: 200, message: 'タスクを作成しました'}, status: 200
     else
-      render json: {status: 400, message: todo.errors.full_messages}
+      render json: {status: 400, message: todo.errors.full_messages}, status: 400
     end
   end
 
   def update
     todo = Todo.find(params[:id])
     if todo.update(title: todo_params[:title], description: todo_params[:description], status: status_params[:status], user_id: todo_params[:user_id])
-      render json: {"status": 200, "message": "タスクを更新しました"}
+      render json: {"status": 200, "message": "タスクを更新しました"}, status: 200
     else
-      render json: {status: 400, message: todo.errors.full_messages}
+      render json: {status: 400, message: todo.errors.full_messages}, status: 400
     end
   end
 
   def destroy
     Todo.find(params[:id]).destroy
-    render json: {"status": 200, "message": "タスクを削除しました"}
+    render json: {"status": 200, "message": "タスクを削除しました"}, status: 200
   end
 
   private
 
   def user_todos
     unless authenticated_user.todos.exists?(id: params[:id])
-      render json: {"status": 403, "message": "権限がありません"}
+      render json: {"status": 403, "message": "権限がありません"}, status: 403
     end
   end
 
