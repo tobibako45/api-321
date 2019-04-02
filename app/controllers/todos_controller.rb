@@ -10,7 +10,7 @@ class TodosController < ApplicationController
   end
 
   def show
-    todo = authenticated_user.todos.find(params[:id])
+    todo = authenticated_user.todos.where(id: params[:id]).select(:id, :title, :description, :status)
     render json: todo
   end
 
