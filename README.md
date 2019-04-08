@@ -23,30 +23,36 @@ curl -X POST http://localhost:3000/users/login -H 'Content-Type: application/jso
 ```
 
 
+リフレッシュトークン
+```
+curl -X POST http://localhost:3000/users/token-refresh -H 'Content-Type: application/json' -d '{"refresh_token":"<REFRESH_TOKEN>"}'
+```
+
+
 
 自分のタスクの作成  
 ```
-curl -F title=たすく -F description=テスト説明 -F status=0 http://localhost:3000/todos -H 'Authorization: Token eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.a0U7auslNuYr8qsE_zCrhEThc1ksLbfOMz5DiM9qcsg'
+curl -F title=たすく -F description=テスト説明 -F status=0 http://localhost:3000/todos -H 'Authorization: Basic <ACCESS_TOKEN>'
 ```
 
 自分のタスク一覧
   
 ```
-curl -X GET http://localhost:3000/todos -H 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.a0U7auslNuYr8qsE_zCrhEThc1ksLbfOMz5DiM9qcsg' -H 'Content-Type: application/json'
+curl -X GET http://localhost:3000/todos -H 'Content-Type: application/json' -H 'Authorization: Basic <ACCESS_TOKEN>'
 ```
 
 自分のタスク詳細
 ```
-curl -X GET http://localhost:3000/todos/1 -H 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.a0U7auslNuYr8qsE_zCrhEThc1ksLbfOMz5DiM9qcsg' -H 'Content-Type: application/json'
+curl -X GET http://localhost:3000/todos/1 -H 'Content-Type: application/json' -H 'Authorization: Basic <ACCESS_TOKEN>'
 ```
 
 自分のタスクの更新  
 ```
-curl -X PATCH http://localhost:3000/todos/1 -H 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.a0U7auslNuYr8qsE_zCrhEThc1ksLbfOMz5DiM9qcsg' -H 'Content-Type: application/json'  -d '{"title": "タイトル変えたよ","description": "description変えたよ", "status": 1}'
+curl -X PATCH http://localhost:3000/todos/1 -H 'Content-Type: application/json'  -d '{"title": "タイトル変えたよ","description": "description変えたよ", "status": 1}' -H 'Authorization: Basic <ACCESS_TOKEN>'
 ```
 
 自分のタスクの削除 
 ```
-curl -X DELETE http://localhost:3000/todos/1 -H 'Authorization: Basic eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXIxQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiJwYXNzd29yZCJ9.a0U7auslNuYr8qsE_zCrhEThc1ksLbfOMz5DiM9qcsg' -H 'Content-Type: application/json'
+curl -X DELETE http://localhost:3000/todos/1 -H 'Content-Type: application/json' -H 'Authorization: Basic <ACCESS_TOKEN>'
 ```
 
