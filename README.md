@@ -2,6 +2,8 @@
 
 ### Web APIを作ろう！(codebaseイベント 2019.3.21 )
 
+JWT認証
+
 一覧
 ```
 curl -X GET http://localhost:3000/users -H 'Content-Type: application/json'
